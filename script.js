@@ -29,7 +29,7 @@ const work=(w,i)=>`<section class="work" data-i="${i}"><button class="frame" ari
 const mq=['Вход свободный','Экспонаты открываются кликом','Свет можно приглушить','Добавьте в зал своё фото'].map(s=>`<span>${s}</span>`).join('');
 track.innerHTML=`<section class="intro"><h1 aria-label="Ракурс">${[...'Ракурс'].map((c,i)=>`<span class="l" style="--i:${i}" aria-hidden="true">${c}</span>`).join('')}</h1><p>Музей абстрактной живописи и предметов. Шесть залов, восемнадцать экспонатов: идите вправо.</p><p>Колесо мыши, перетаскивание или стрелки на клавиатуре.</p><div class="mq" aria-hidden="true"><div>${mq}${mq}</div></div></section>`
 +H.map((h,k)=>`<section class="hall" style="--c:${h[3]}"><b class="hn" aria-hidden="true">${h[0]}</b><h2>Зал ${h[0]}. ${h[1]}</h2><p>${h[2]}</p></section>`+A.map((w,i)=>w.h===k?work(w,i):'').join('')).join('')
-+`<section class="add"><h2>Ваш экспонат</h2><p>Выберите фото на устройстве, и оно появится в зале. Файл остаётся у вас, на сервер ничего не уходит.</p><label class="btn" tabindex="0" id="upl">Добавить фото<input type="file" id="file" accept="image/*" hidden></label></section><section class="outro"><h2>Выход</h2><p>Спасибо, что зашли. Вернуться ко входу можно одной кнопкой.</p><button class="btn" id="back">Вернуться ко входу</button></section>`;
++`<section class="add"><h2>Ваш экспонат</h2><p>Выберите фото на устройстве, и оно появится в зале. Файл остаётся у вас, на сервер ничего не уходит.</p><label class="btn" tabindex="0" id="upl">Добавить фото<input type="file" id="file" accept="image/*" hidden></label></section><section class="about"><h2>О музее</h2><p>«Ракурс» — музей абстрактной живописи, предметов и фотографий. Все экспонаты нарисованы кодом, а залы собраны из HTML, CSS и JavaScript без библиотек.</p><dl class="facts"><div><dt>Залы</dt><dd>Шесть, от «Цвета» до «Тишины»</dd></div><div><dt>Экспонатов</dt><dd>Восемнадцать и ваши фото</dd></div><div><dt>Вход</dt><dd>Свободный</dd></div><div><dt>Выставка</dt><dd>Меняется раз в сезон</dd></div></dl></section><section class="contact"><h2>Контакты</h2><p>Хотите показать работу в музее или обсудить такой же сайт для себя? Напишите автору.</p><dl class="facts"><div><dt>Часы</dt><dd>Круглосуточно, залы не закрываются</dd></div><div><dt>Адрес</dt><dd>Онлайн, по этой ссылке</dd></div><div><dt>Автор сайта</dt><dd>MakwinIT</dd></div></dl><a class="btn" href="https://t.me/makwinit" target="_blank" rel="noopener">Написать в Telegram</a></section><section class="outro"><h2>Выход</h2><p>Спасибо, что зашли. Вернуться ко входу можно одной кнопкой.</p><button class="btn" id="back">Вернуться ко входу</button></section>`;
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches,k=rm?1:.085;
 if(matchMedia('(pointer:coarse)').matches)track.querySelector('.intro p+p').textContent='Проведите пальцем влево или вправо.';
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.3});
@@ -37,7 +37,11 @@ let works,frames,halls=[...track.querySelectorAll('.hall')];
 const refresh=()=>{works=[...track.querySelectorAll('.work')];frames=[...track.querySelectorAll('.frame')];works.forEach(w=>{if(!w.classList.contains('in'))io.observe(w)})};
 let x=0,t=0,max=0,cx=[],sx=0,st=0,drag=false,moved=0,vel=0,lm=0,ox=0,oy=0,last=null,mx=innerWidth/2,my=innerHeight/2,px=mx,py=my;
 const cl=v=>Math.max(0,Math.min(max,v));
-function size(){max=Math.max(0,track.scrollWidth-innerWidth);cx=works.map(e=>e.offsetLeft+e.offsetWidth/2);t=cl(t)}
+function size(){max=Math.max(0,track.scrollWidth-innerWidth);cx=works.map(e=>e.offsetLeft+e.offsetWidth/2);starts=stops.map(s=>s.e.offsetLeft);t=cl(t)}
+let starts=[],mcur=-2;
+const stops=[...halls.map((h,i)=>({l:H[i][0],e:h,c:H[i][3],n:'Зал '+H[i][0]+': '+H[i][1]})),{l:'О музее',e:track.querySelector('.about'),c:P.k,n:'О музее'},{l:'Контакты',e:track.querySelector('.contact'),c:P.k,n:'Контакты'}];
+const mp=$('mp');mp.innerHTML=stops.map((s,i)=>`<button data-i="${i}" style="--c:${s.c}" aria-label="${s.n}">${s.l}</button>`).join('');
+mp.addEventListener('click',e=>{const b=e.target.closest('button');if(b)t=cl(stops[+b.dataset.i].e.offsetLeft-innerWidth*.06)});
 refresh();size();addEventListener('resize',size);
 addEventListener('wheel',e=>{if(ov.classList.contains('open'))return;t=cl(t+(e.deltaY+e.deltaX)*1.1)},{passive:true});
 main.addEventListener('pointerdown',e=>{drag=true;moved=0;sx=e.clientX;st=t;vel=0;lm=0});
@@ -49,11 +53,11 @@ addEventListener('keydown',e=>{
   if(ov.classList.contains('open'))return;
   const s={ArrowRight:1,ArrowDown:1,PageDown:1,ArrowLeft:-1,ArrowUp:-1,PageUp:-1}[e.key];
   if(s)t=cl(t+s*innerWidth*.6);else if(e.key==='Home')t=0;else if(e.key==='End')t=max});
-track.addEventListener('focusin',e=>{const w=e.target.closest('.work,.add');if(w)t=cl(w.offsetLeft+w.offsetWidth/2-innerWidth/2)});
+track.addEventListener('focusin',e=>{const w=e.target.closest('.work,.add,.about,.contact');if(w)t=cl(w.offsetLeft+w.offsetWidth/2-innerWidth/2)});
 track.addEventListener('pointermove',e=>{const f=e.target.closest('.frame');if(!f||drag||e.pointerType!=='mouse')return;const r=f.getBoundingClientRect(),a=(e.clientX-r.left)/r.width-.5,b=(e.clientY-r.top)/r.height-.5;f.style.transform=`perspective(800px) rotateY(${a*12}deg) rotateX(${-b*12}deg) scale(1.02)`});
 track.addEventListener('pointerout',e=>{const f=e.target.closest('.frame');if(f)f.style.transform=''});
 track.addEventListener('click',e=>{const f=e.target.closest('.frame');if(!f||moved>6)return;openW(+f.closest('.work').dataset.i,e)});
-document.addEventListener('pointerover',e=>$('cur').classList.toggle('big',!!e.target.closest('.frame,.btn,.tg')));
+document.addEventListener('pointerover',e=>$('cur').classList.toggle('big',!!e.target.closest('.frame,.btn,.tg,.mp button')));
 $('back').onclick=()=>{t=0};
 $('upl').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('file').click()}});
 $('file').addEventListener('change',e=>{
@@ -70,9 +74,21 @@ function openW(i,e){
   $('oh').textContent=w.t;$('om').textContent=`${w.a}, ${w.y}. ${w.m}`;$('od').textContent=w.d;
   ov.style.clipPath=`circle(0px at ${ox}px ${oy}px)`;void ov.offsetWidth;
   ov.classList.add('open');ov.style.clipPath=`circle(150vmax at ${ox}px ${oy}px)`;
-  main.inert=true;$('oc').focus({preventScroll:true})}
-function closeW(){ov.classList.remove('open');ov.style.clipPath=`circle(0px at ${ox}px ${oy}px)`;main.inert=false;if(last)last.focus({preventScroll:true})}
+  main.inert=true;document.body.classList.toggle('lp',loupe);buildLens();$('oc').focus({preventScroll:true})}
+function closeW(){document.body.classList.remove('lp');lens.classList.remove('on');ov.classList.remove('open');ov.style.clipPath=`circle(0px at ${ox}px ${oy}px)`;main.inert=false;if(last)last.focus({preventScroll:true})}
 $('oc').onclick=closeW;
+const lens=$('lens'),Z=2.6;let loupe=false;
+function buildLens(){lens.innerHTML='';lens.classList.remove('on');const a=$('oa').firstElementChild;if(a)lens.appendChild(a.cloneNode(true))}
+function lensMove(e){
+  if(!loupe||!ov.classList.contains('open'))return;
+  const a=$('oa').firstElementChild,c=lens.firstElementChild;if(!a||!c)return;
+  const r=a.getBoundingClientRect();
+  if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom){lens.classList.remove('on');return}
+  const R=lens.offsetWidth/2;
+  c.style.cssText=`position:absolute;max-width:none;box-shadow:none;transform:none;aspect-ratio:auto;width:${r.width*Z}px;height:${r.height*Z}px;left:${R-(e.clientX-r.left)*Z}px;top:${R-(e.clientY-r.top)*Z}px`;
+  lens.style.left=(e.clientX-R)+'px';lens.style.top=(e.clientY-R-(e.pointerType==='touch'?R+28:0))+'px';lens.classList.add('on')}
+ov.addEventListener('pointermove',lensMove);ov.addEventListener('pointerdown',lensMove);ov.addEventListener('pointerleave',()=>lens.classList.remove('on'));
+$('lp').onclick=()=>{loupe=!loupe;$('lp').setAttribute('aria-pressed',loupe);$('lp').textContent=loupe?'Выключить лупу':'Включить лупу';document.body.classList.toggle('lp',loupe);if(!loupe)lens.classList.remove('on')};
 const lab=$('lab'),fill=$('fill'),floor=$('floor'),cur=$('cur');
 (function tick(){
   x+=(t-x)*k;if(Math.abs(t-x)<.1)x=t;
@@ -85,6 +101,8 @@ const lab=$('lab'),fill=$('fill'),floor=$('floor'),cur=$('cur');
   px+=(mx-px)*.25;py+=(my-py)*.25;cur.style.transform=`translate(${px}px,${py}px)`;
   dk.style.setProperty('--mx',px+'px');dk.style.setProperty('--my',py+'px');
   fill.style.transform=`scaleX(${max?x/max:0})`;
+  const m=x+innerWidth*.4;let ci=-1;starts.forEach((s,i)=>{if(s<=m)ci=i});
+  if(ci!==mcur){mcur=ci;[...mp.children].forEach((b,i)=>b.classList.toggle('on',i===ci))}
   const mid=x+innerWidth/2;let n=0;cx.forEach((c,i)=>{if(Math.abs(c-mid)<Math.abs(cx[n]-mid))n=i});
-  lab.textContent=max&&x>=max-4?'Выход':mid<cx[0]-innerWidth*.55?'Вход':`Зал ${H[A[n].h][0]}: ${A[n].t}`;
+  lab.textContent=max&&x>=max-4?'Выход':ci>5?stops[ci].n:mid<cx[0]-innerWidth*.55?'Вход':`Зал ${H[A[n].h][0]}: ${A[n].t}`;
   requestAnimationFrame(tick)})();
