@@ -13,12 +13,12 @@
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;-webkit-tap-highlight-color:transparent;background:var(--wall);color:var(--ink);font-family:var(--s)}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid #2742D8;outline-offset:4px}
-@media(hover:hover) and (pointer:fine){body,body *{cursor:none!important}}
+main{cursor:grab}main:active{cursor:grabbing}.frame,.btn,.tg,.mp button{cursor:pointer}
 main{touch-action:none;height:100%;-webkit-user-select:none;user-select:none}
-#track{position:relative;display:flex;align-items:center;height:100%;width:max-content;padding:6vh 0 9vh;will-change:transform}
+#track{position:relative;display:flex;align-items:center;height:100%;width:max-content;padding:6vh 0 11vh;will-change:transform}
 .top{position:fixed;inset:0 0 auto 0;display:flex;justify-content:space-between;align-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) clamp(18px,3vw,40px) 0;font:500 13px var(--d);z-index:6;pointer-events:none}
 .tg{pointer-events:auto;border:1.5px solid var(--ink);background:none;padding:8px 12px;font:500 12px var(--d)}
-.floor{pointer-events:none;position:fixed;inset:auto 0 0 0;height:13vh;z-index:3;border-top:3px solid #0002;background:linear-gradient(#fff0,#0001),repeating-linear-gradient(90deg,#ECEDEE 0 179px,#D5D8DA 179px 180px)}
+.floor{pointer-events:none;position:fixed;inset:auto 0 0 0;height:15vh;z-index:3;border-top:3px solid #0002;background:linear-gradient(#fff0,#0001),repeating-linear-gradient(90deg,#ECEDEE 0 179px,#D5D8DA 179px 180px)}
 .work::before{content:"";position:absolute;left:-10%;top:-12vh;width:120%;height:90%;background:radial-gradient(ellipse at 50% 0,rgba(255,205,90,.28),transparent 62%);pointer-events:none}
 .intro{flex:none;width:100vw;padding:0 6vw;position:relative}
 h1{margin:0;font:700 min(15vw,30vh) var(--d);letter-spacing:-.04em;line-height:1.08;overflow:hidden}
@@ -49,9 +49,9 @@ h1{margin:0;font:700 min(15vw,30vh) var(--d);letter-spacing:-.04em;line-height:1
 .pl small{font-size:12px;color:var(--mute)}
 .pl b{font:500 14px var(--d)}
 .pl span{font-style:italic;color:var(--mute);font-size:14px}
-.add,.outro{flex:none;padding:0 6vw;width:min(80vw,640px)}
-.add h2,.outro h2{font:700 clamp(28px,4.5vw,60px) var(--d);letter-spacing:-.03em;margin:0 0 16px;line-height:1.08}
-.add p,.outro p{max-width:34ch;font-size:18px;line-height:1.55;margin:0 0 24px}
+.add,.outro,.about,.contact{flex:none;padding:0 6vw;width:min(80vw,640px)}
+.add h2,.outro h2,.about h2,.contact h2{font:700 clamp(28px,4.5vw,60px) var(--d);letter-spacing:-.03em;margin:0 0 16px;line-height:1.08}
+.add p,.outro p,.about p,.contact p{max-width:34ch;font-size:18px;line-height:1.55;margin:0 0 24px}
 .btn{display:inline-block;border:2px solid var(--ink);background:none;padding:14px 22px;font:500 14px var(--d);transition:background .25s,color .25s}
 .btn:hover{background:var(--ink);color:var(--wall)}
 .bar{position:fixed;inset:auto 0 0 0;padding:0 clamp(18px,3vw,40px) calc(16px + env(safe-area-inset-bottom,0px));z-index:5;pointer-events:none;color:var(--ink)}
@@ -60,9 +60,19 @@ h1{margin:0;font:700 min(15vw,30vh) var(--d);letter-spacing:-.04em;line-height:1
 .bar i b{display:block;height:100%;background:var(--ink);transform-origin:left;transform:scaleX(0)}
 #dk{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:0;transition:opacity .6s;background:radial-gradient(circle 230px at var(--mx,50%) var(--my,50%),transparent 0,rgba(6,8,12,.94) 100%)}
 #dk.on{opacity:1}
-#cur{position:fixed;left:0;top:0;width:14px;height:14px;margin:-7px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:60;transition:width .3s,height .3s,margin .3s}
+#cur{display:none!important;position:fixed;left:0;top:0;width:14px;height:14px;margin:-7px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:60;transition:width .3s,height .3s,margin .3s}
 #cur.big{width:80px;height:80px;margin:-40px}
 @media(hover:none),(pointer:coarse){#cur{display:none}}
+.facts{margin:0 0 24px;display:grid;gap:10px;max-width:40ch}.facts div{display:grid;grid-template-columns:7.5em 1fr;gap:12px;border-top:1px solid color-mix(in srgb,var(--ink) 25%,transparent);padding-top:10px}.facts dt{font:500 13px var(--d)}.facts dd{margin:0;font-size:17px;line-height:1.5}
+a.btn{color:var(--ink);text-decoration:none}a.btn:hover{color:var(--wall)}
+.mp{display:flex;gap:6px;margin-bottom:10px;pointer-events:auto;width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.mp button{border:1px solid color-mix(in srgb,var(--ink) 35%,transparent);background:none;padding:5px 9px;font:500 11px var(--d);white-space:nowrap}
+.mp button:hover{border-color:var(--ink)}
+.mp button.on{background:var(--ink);color:var(--wall);border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--c)}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+#lens{position:fixed;left:0;top:0;width:170px;height:170px;border-radius:50%;overflow:hidden;border:3px solid #fff;box-shadow:0 10px 30px rgba(0,0,0,.4);pointer-events:none;opacity:0;transition:opacity .2s;z-index:3;background:#fff}
+#lens.on{opacity:1}
+body.lp #cur{opacity:0}
 .cu{position:fixed;inset:0;z-index:50;pointer-events:none;display:flex}
 .cu i{flex:1;background:#18202E;animation:op 1.3s cubic-bezier(.8,0,.2,1) .5s forwards}
 .cu i:first-child{--o:-101%;background:#2F4BFF}.cu i:last-child{--o:101%;background:#FF7FA6}
@@ -70,7 +80,7 @@ h1{margin:0;font:700 min(15vw,30vh) var(--d);letter-spacing:-.04em;line-height:1
 #ov{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1fr 1fr;background:var(--wall);clip-path:circle(0px at 50% 50%);visibility:hidden;transition:clip-path .9s cubic-bezier(.76,0,.24,1),visibility 0s .9s}
 #ov.open{visibility:visible;transition:clip-path .9s cubic-bezier(.76,0,.24,1)}
 .oa{display:grid;place-items:center;background:#E9EAEC;overflow:hidden}
-.oa>*{height:78%;max-width:84%;aspect-ratio:3/4;object-fit:cover;box-shadow:0 40px 70px rgba(20,22,27,.4);transform:scale(1.18);transition:transform 1.5s cubic-bezier(.2,.8,.1,1) .25s}
+.oa>*{touch-action:none;height:78%;max-width:84%;aspect-ratio:3/4;object-fit:cover;box-shadow:0 40px 70px rgba(20,22,27,.4);transform:scale(1.18);transition:transform 1.5s cubic-bezier(.2,.8,.1,1) .25s}
 #ov.open .oa>*{transform:none}
 .ot{align-self:center;padding:6vw;max-width:560px}
 .ot>*{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
@@ -79,8 +89,8 @@ h1{margin:0;font:700 min(15vw,30vh) var(--d);letter-spacing:-.04em;line-height:1
 .ot h2{font:700 clamp(28px,4vw,54px) var(--d);letter-spacing:-.03em;line-height:1.08;margin:0 0 16px}
 .ot .meta{font-style:italic;color:var(--mute);margin:0 0 20px}
 .ot .desc{font-size:19px;line-height:1.6;margin:0 0 32px}
-@media(max-width:760px){#ov{grid-template-columns:1fr;grid-template-rows:42% 1fr}.oa{padding-top:env(safe-area-inset-top,0px)}.oa>*{height:86%}.ot{padding:20px 24px calc(20px + env(safe-area-inset-bottom,0px));align-self:start;min-height:0;max-height:100%;max-width:none;overflow:auto}.ot h2{font-size:26px}.ot .desc{font-size:17px;margin-bottom:20px}.frame{height:min(56vh,112vw)}.top{font-size:12px}.tg{font-size:11px;padding:7px 10px}.work{padding:0 20px}.hall,.add,.outro{width:86vw}.pl{max-width:calc(100vw - 40px)}#dk{background:radial-gradient(circle 160px at var(--mx,50%) var(--my,50%),transparent 0,rgba(6,8,12,.94) 100%)}}
-@media(max-height:480px){.frame{height:60vh}.pl{margin-top:8px;padding:6px 10px}.ot{overflow:auto;max-height:100%}.ot h2{font-size:24px;margin-bottom:8px}.ot .desc{font-size:15px;margin-bottom:12px}.floor{height:16vh}.hall h2{font-size:30px}.hall p,.intro p{font-size:16px}}
+@media(max-width:760px){#ov{grid-template-columns:1fr;grid-template-rows:42% 1fr}.oa{padding-top:env(safe-area-inset-top,0px)}.oa>*{height:86%}.ot{padding:20px 24px calc(20px + env(safe-area-inset-bottom,0px));align-self:start;min-height:0;max-height:100%;max-width:none;overflow:auto}.ot h2{font-size:26px}.ot .desc{font-size:17px;margin-bottom:20px}.frame{height:min(56vh,112vw)}.top{font-size:12px}.tg{font-size:11px;padding:7px 10px}#lens{width:130px;height:130px}.work{padding:0 20px}.hall,.add,.outro{width:86vw}.pl{max-width:calc(100vw - 40px)}#dk{background:radial-gradient(circle 160px at var(--mx,50%) var(--my,50%),transparent 0,rgba(6,8,12,.94) 100%)}}
+@media(max-height:480px){.frame{height:60vh}.pl{margin-top:8px;padding:6px 10px}.ot{overflow:auto;max-height:100%}.ot h2{font-size:24px;margin-bottom:8px}.ot .desc{font-size:15px;margin-bottom:12px}.floor{height:19vh}#lab{display:none}.mp{margin-bottom:6px}.mp button{padding:3px 7px}.hall h2{font-size:30px}.hall p,.intro p{font-size:16px}}
 @media(hover:none){.btn:hover{background:none;color:var(--ink)}}
 @media(prefers-reduced-motion:reduce){.cu{display:none}.l,.mq div{animation:none;transform:none}.frame::after,.pl,#ov,#ov.open,.ot>*,.oa>*{transition:none}}
 </style>
@@ -90,10 +100,10 @@ h1{margin:0;font:700 min(15vw,30vh) var(--d);letter-spacing:-.04em;line-height:1
 <header class="top"><span>Музей «Ракурс»</span><button class="tg" id="tg" aria-pressed="false">Приглушить свет</button></header>
 <main id="main"><div id="track"></div></main>
 <div class="floor" id="floor"></div><div id="dk"></div><div id="cur"></div>
-<div class="bar"><div id="lab">Вход</div><i><b id="fill"></b></i></div>
+<div class="bar"><div id="lab">Вход</div><nav class="mp" id="mp" aria-label="Карта залов"></nav><i><b id="fill"></b></i></div>
 <div id="ov" role="dialog" aria-modal="true" aria-label="Экспонат">
-  <div class="oa" id="oa"></div>
-  <div class="ot"><h2 id="oh"></h2><p class="meta" id="om"></p><p class="desc" id="od"></p><button class="btn" id="oc">Закрыть экспонат</button></div>
+  <div class="oa" id="oa"></div><div id="lens" aria-hidden="true"></div>
+  <div class="ot"><h2 id="oh"></h2><p class="meta" id="om"></p><p class="desc" id="od"></p><div class="acts"><button class="btn" id="lp" aria-pressed="false">Включить лупу</button><button class="btn" id="oc">Закрыть экспонат</button></div></div>
 </div>
 <script>
 const P={y:'#FFC21A',b:'#2F4BFF',r:'#FF7FA6',g:'#12A37F',k:'#14161B',w:'#F1F2F3',o:'#FF6B35',v:'#7B4DFF',c:'#19B5C9'};
@@ -127,7 +137,7 @@ const work=(w,i)=>`<section class="work" data-i="${i}"><button class="frame" ari
 const mq=['Вход свободный','Экспонаты открываются кликом','Свет можно приглушить','Добавьте в зал своё фото'].map(s=>`<span>${s}</span>`).join('');
 track.innerHTML=`<section class="intro"><h1 aria-label="Ракурс">${[...'Ракурс'].map((c,i)=>`<span class="l" style="--i:${i}" aria-hidden="true">${c}</span>`).join('')}</h1><p>Музей абстрактной живописи и предметов. Шесть залов, восемнадцать экспонатов: идите вправо.</p><p>Колесо мыши, перетаскивание или стрелки на клавиатуре.</p><div class="mq" aria-hidden="true"><div>${mq}${mq}</div></div></section>`
 +H.map((h,k)=>`<section class="hall" style="--c:${h[3]}"><b class="hn" aria-hidden="true">${h[0]}</b><h2>Зал ${h[0]}. ${h[1]}</h2><p>${h[2]}</p></section>`+A.map((w,i)=>w.h===k?work(w,i):'').join('')).join('')
-+`<section class="add"><h2>Ваш экспонат</h2><p>Выберите фото на устройстве, и оно появится в зале. Файл остаётся у вас, на сервер ничего не уходит.</p><label class="btn" tabindex="0" id="upl">Добавить фото<input type="file" id="file" accept="image/*" hidden></label></section><section class="outro"><h2>Выход</h2><p>Спасибо, что зашли. Вернуться ко входу можно одной кнопкой.</p><button class="btn" id="back">Вернуться ко входу</button></section>`;
++`<section class="add"><h2>Ваш экспонат</h2><p>Выберите фото на устройстве, и оно появится в зале. Файл остаётся у вас, на сервер ничего не уходит.</p><label class="btn" tabindex="0" id="upl">Добавить фото<input type="file" id="file" accept="image/*" hidden></label></section><section class="about"><h2>О музее</h2><p>«Ракурс» — музей абстрактной живописи, предметов и фотографий. Все экспонаты нарисованы кодом, а залы собраны из HTML, CSS и JavaScript без библиотек.</p><dl class="facts"><div><dt>Залы</dt><dd>Шесть, от «Цвета» до «Тишины»</dd></div><div><dt>Экспонатов</dt><dd>Восемнадцать и ваши фото</dd></div><div><dt>Вход</dt><dd>Свободный</dd></div><div><dt>Выставка</dt><dd>Меняется раз в сезон</dd></div></dl></section><section class="contact"><h2>Контакты</h2><p>Хотите показать работу в музее или обсудить такой же сайт для себя? Напишите автору.</p><dl class="facts"><div><dt>Часы</dt><dd>Круглосуточно, залы не закрываются</dd></div><div><dt>Адрес</dt><dd>Онлайн, по этой ссылке</dd></div><div><dt>Автор сайта</dt><dd>MakwinIT</dd></div></dl><a class="btn" href="https://t.me/makwinit" target="_blank" rel="noopener">Написать в Telegram</a></section><section class="outro"><h2>Выход</h2><p>Спасибо, что зашли. Вернуться ко входу можно одной кнопкой.</p><button class="btn" id="back">Вернуться ко входу</button></section>`;
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches,k=rm?1:.085;
 if(matchMedia('(pointer:coarse)').matches)track.querySelector('.intro p+p').textContent='Проведите пальцем влево или вправо.';
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.3});
@@ -135,7 +145,11 @@ let works,frames,halls=[...track.querySelectorAll('.hall')];
 const refresh=()=>{works=[...track.querySelectorAll('.work')];frames=[...track.querySelectorAll('.frame')];works.forEach(w=>{if(!w.classList.contains('in'))io.observe(w)})};
 let x=0,t=0,max=0,cx=[],sx=0,st=0,drag=false,moved=0,vel=0,lm=0,ox=0,oy=0,last=null,mx=innerWidth/2,my=innerHeight/2,px=mx,py=my;
 const cl=v=>Math.max(0,Math.min(max,v));
-function size(){max=Math.max(0,track.scrollWidth-innerWidth);cx=works.map(e=>e.offsetLeft+e.offsetWidth/2);t=cl(t)}
+function size(){max=Math.max(0,track.scrollWidth-innerWidth);cx=works.map(e=>e.offsetLeft+e.offsetWidth/2);starts=stops.map(s=>s.e.offsetLeft);t=cl(t)}
+let starts=[],mcur=-2;
+const stops=[...halls.map((h,i)=>({l:H[i][0],e:h,c:H[i][3],n:'Зал '+H[i][0]+': '+H[i][1]})),{l:'О музее',e:track.querySelector('.about'),c:P.k,n:'О музее'},{l:'Контакты',e:track.querySelector('.contact'),c:P.k,n:'Контакты'}];
+const mp=$('mp');mp.innerHTML=stops.map((s,i)=>`<button data-i="${i}" style="--c:${s.c}" aria-label="${s.n}">${s.l}</button>`).join('');
+mp.addEventListener('click',e=>{const b=e.target.closest('button');if(b)t=cl(stops[+b.dataset.i].e.offsetLeft-innerWidth*.06)});
 refresh();size();addEventListener('resize',size);
 addEventListener('wheel',e=>{if(ov.classList.contains('open'))return;t=cl(t+(e.deltaY+e.deltaX)*1.1)},{passive:true});
 main.addEventListener('pointerdown',e=>{drag=true;moved=0;sx=e.clientX;st=t;vel=0;lm=0});
@@ -147,11 +161,11 @@ addEventListener('keydown',e=>{
   if(ov.classList.contains('open'))return;
   const s={ArrowRight:1,ArrowDown:1,PageDown:1,ArrowLeft:-1,ArrowUp:-1,PageUp:-1}[e.key];
   if(s)t=cl(t+s*innerWidth*.6);else if(e.key==='Home')t=0;else if(e.key==='End')t=max});
-track.addEventListener('focusin',e=>{const w=e.target.closest('.work,.add');if(w)t=cl(w.offsetLeft+w.offsetWidth/2-innerWidth/2)});
+track.addEventListener('focusin',e=>{const w=e.target.closest('.work,.add,.about,.contact');if(w)t=cl(w.offsetLeft+w.offsetWidth/2-innerWidth/2)});
 track.addEventListener('pointermove',e=>{const f=e.target.closest('.frame');if(!f||drag||e.pointerType!=='mouse')return;const r=f.getBoundingClientRect(),a=(e.clientX-r.left)/r.width-.5,b=(e.clientY-r.top)/r.height-.5;f.style.transform=`perspective(800px) rotateY(${a*12}deg) rotateX(${-b*12}deg) scale(1.02)`});
 track.addEventListener('pointerout',e=>{const f=e.target.closest('.frame');if(f)f.style.transform=''});
 track.addEventListener('click',e=>{const f=e.target.closest('.frame');if(!f||moved>6)return;openW(+f.closest('.work').dataset.i,e)});
-document.addEventListener('pointerover',e=>$('cur').classList.toggle('big',!!e.target.closest('.frame,.btn,.tg')));
+document.addEventListener('pointerover',e=>$('cur').classList.toggle('big',!!e.target.closest('.frame,.btn,.tg,.mp button')));
 $('back').onclick=()=>{t=0};
 $('upl').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('file').click()}});
 $('file').addEventListener('change',e=>{
@@ -168,9 +182,21 @@ function openW(i,e){
   $('oh').textContent=w.t;$('om').textContent=`${w.a}, ${w.y}. ${w.m}`;$('od').textContent=w.d;
   ov.style.clipPath=`circle(0px at ${ox}px ${oy}px)`;void ov.offsetWidth;
   ov.classList.add('open');ov.style.clipPath=`circle(150vmax at ${ox}px ${oy}px)`;
-  main.inert=true;$('oc').focus({preventScroll:true})}
-function closeW(){ov.classList.remove('open');ov.style.clipPath=`circle(0px at ${ox}px ${oy}px)`;main.inert=false;if(last)last.focus({preventScroll:true})}
+  main.inert=true;document.body.classList.toggle('lp',loupe);buildLens();$('oc').focus({preventScroll:true})}
+function closeW(){document.body.classList.remove('lp');lens.classList.remove('on');ov.classList.remove('open');ov.style.clipPath=`circle(0px at ${ox}px ${oy}px)`;main.inert=false;if(last)last.focus({preventScroll:true})}
 $('oc').onclick=closeW;
+const lens=$('lens'),Z=2.6;let loupe=false;
+function buildLens(){lens.innerHTML='';lens.classList.remove('on');const a=$('oa').firstElementChild;if(a)lens.appendChild(a.cloneNode(true))}
+function lensMove(e){
+  if(!loupe||!ov.classList.contains('open'))return;
+  const a=$('oa').firstElementChild,c=lens.firstElementChild;if(!a||!c)return;
+  const r=a.getBoundingClientRect();
+  if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom){lens.classList.remove('on');return}
+  const R=lens.offsetWidth/2;
+  c.style.cssText=`position:absolute;max-width:none;box-shadow:none;transform:none;aspect-ratio:auto;width:${r.width*Z}px;height:${r.height*Z}px;left:${R-(e.clientX-r.left)*Z}px;top:${R-(e.clientY-r.top)*Z}px`;
+  lens.style.left=(e.clientX-R)+'px';lens.style.top=(e.clientY-R-(e.pointerType==='touch'?R+28:0))+'px';lens.classList.add('on')}
+ov.addEventListener('pointermove',lensMove);ov.addEventListener('pointerdown',lensMove);ov.addEventListener('pointerleave',()=>lens.classList.remove('on'));
+$('lp').onclick=()=>{loupe=!loupe;$('lp').setAttribute('aria-pressed',loupe);$('lp').textContent=loupe?'Выключить лупу':'Включить лупу';document.body.classList.toggle('lp',loupe);if(!loupe)lens.classList.remove('on')};
 const lab=$('lab'),fill=$('fill'),floor=$('floor'),cur=$('cur');
 (function tick(){
   x+=(t-x)*k;if(Math.abs(t-x)<.1)x=t;
@@ -183,8 +209,10 @@ const lab=$('lab'),fill=$('fill'),floor=$('floor'),cur=$('cur');
   px+=(mx-px)*.25;py+=(my-py)*.25;cur.style.transform=`translate(${px}px,${py}px)`;
   dk.style.setProperty('--mx',px+'px');dk.style.setProperty('--my',py+'px');
   fill.style.transform=`scaleX(${max?x/max:0})`;
+  const m=x+innerWidth*.4;let ci=-1;starts.forEach((s,i)=>{if(s<=m)ci=i});
+  if(ci!==mcur){mcur=ci;[...mp.children].forEach((b,i)=>b.classList.toggle('on',i===ci))}
   const mid=x+innerWidth/2;let n=0;cx.forEach((c,i)=>{if(Math.abs(c-mid)<Math.abs(cx[n]-mid))n=i});
-  lab.textContent=max&&x>=max-4?'Выход':mid<cx[0]-innerWidth*.55?'Вход':`Зал ${H[A[n].h][0]}: ${A[n].t}`;
+  lab.textContent=max&&x>=max-4?'Выход':ci>5?stops[ci].n:mid<cx[0]-innerWidth*.55?'Вход':`Зал ${H[A[n].h][0]}: ${A[n].t}`;
   requestAnimationFrame(tick)})();
 </script>
 </body>
